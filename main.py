@@ -35,19 +35,44 @@ while True:
             pygame.quit()
             exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                params['z'] = f"z={int(params['z'][2:]) + 1}"
+            if event.key == pygame.K_PAGEUP:
                 try:
                     params['z'] = f"z={int(params['z'][2:]) + 1}"
                     img = pygame.image.load(get_image(params)).convert()
                 except Exception:
                     print("Invalid z")
-            elif event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_PAGEDOWN:
                 try:
                     params['z'] = f"z={int(params['z'][2:]) - 1}"
                     img = pygame.image.load(get_image(params)).convert()
                 except Exception:
                     print("Invalid z")
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            cord1 = float(params['ll'].split(',')[0][3:])
+            cord2 = float(params['ll'].split(',')[1])
+            params['ll'] = f"ll={cord1},{cord2 + 0.001}"
+
+            img = pygame.image.load(get_image(params)).convert()
+        if keys[pygame.K_LEFT]:
+            cord1 = float(params['ll'].split(',')[0][3:])
+            cord2 = float(params['ll'].split(',')[1])
+            params['ll'] = f"ll={cord1 - 0.001},{cord2}"
+
+            img = pygame.image.load(get_image(params)).convert()
+        if keys[pygame.K_RIGHT]:
+            cord1 = float(params['ll'].split(',')[0][3:])
+            cord2 = float(params['ll'].split(',')[1])
+            params['ll'] = f"ll={cord1 + 0.001},{cord2}"
+
+            img = pygame.image.load(get_image(params)).convert()
+
+        if keys[pygame.K_DOWN]:
+            cord1 = float(params['ll'].split(',')[0][3:])
+            cord2 = float(params['ll'].split(',')[1])
+            params['ll'] = f"ll={cord1},{cord2 - 0.001}"
+
+            img = pygame.image.load(get_image(params)).convert()
 
     screen.fill((0, 0, 0))
     screen.blit(img, (0, 0))
